@@ -11,7 +11,7 @@ export class ViewListComponent implements OnInit {
 
     private lists: List[] = [];
 
-    constructor(private listServ: ListService) {
+    constructor(private listService: ListService) {
     }
 
     ngOnInit() {
@@ -21,7 +21,7 @@ export class ViewListComponent implements OnInit {
 
     loadLists() {
         // Get all lists from server and update the lists property
-        this.listServ.getAllLists().subscribe(response => {
+        this.listService.getAllLists().subscribe(response => {
                 this.lists = response;
                 console.log(this.lists);
             },
@@ -30,7 +30,7 @@ export class ViewListComponent implements OnInit {
 
     // deleteList. The delete list is being filtered out using the .filter method
     deleteList(list: List) {
-        this.listServ.deleteList(list._id).subscribe(
+        this.listService.deleteList(list._id).subscribe(
             response => this.lists = this.lists.filter(lists => lists !== list)
         )
     }

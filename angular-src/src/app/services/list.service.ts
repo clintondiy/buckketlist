@@ -8,6 +8,11 @@ const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
+interface Response {
+    success: boolean;
+    lists: List[];
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -20,9 +25,10 @@ export class ListService {
 
     getAllLists(): Observable<List[]> {
         let URI = `${this.serverApi}/bucketlist/`;
-        return this.http.get<List[]>(URI)
+
+        return this.http.get<Response>(URI)
             .pipe(
-                map(res => <List[]>res.lists)
+                map(res => res.lists)
             );
     }
 
@@ -31,7 +37,7 @@ export class ListService {
         let body = JSON.stringify({title: list.title, description: list.description, category: list.category});
         console.log(body);
 
-        return this.http.post(URI, body, httpOptions);
+        return this.http.post<Response>(URI, body, httpOptions);
     }
 
     deleteList(listId: string): Observable<List> {

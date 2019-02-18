@@ -12,7 +12,7 @@ export class AddListComponent implements OnInit {
 
     private newList: List;
     @Output() addList: EventEmitter<List> = new EventEmitter<List>();
-    constructor(private listServ: ListService) {}
+    constructor(private listService: ListService) {}
 
     ngOnInit() {
         this.newList = {
@@ -25,7 +25,7 @@ export class AddListComponent implements OnInit {
 
     onSubmit() {
         console.log(this.newList.category);
-        this.listServ.addList(this.newList).subscribe(
+        this.listService.addList(this.newList).subscribe(
             response => {
                 console.log(response);
                 if (response.success) {
